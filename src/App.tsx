@@ -1,12 +1,12 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react"
-import { Employee } from "./utils/types"
 import { InputSelect } from "./components/InputSelect"
-import { TransactionPane } from "./components/TransactionPane"
 import { Instructions } from "./components/Instructions"
+import { Transactions } from "./components/Transactions"
 import { useEmployees } from "./hooks/useEmployees"
 import { usePaginatedTransactions } from "./hooks/usePaginatedTransactions"
 import { useTransactionsByEmployee } from "./hooks/useTransactionsByEmployee"
 import { EMPTY_EMPLOYEE } from "./utils/constants"
+import { Employee } from "./utils/types"
 
 export function App() {
   const { data: employees, ...employeeUtils } = useEmployees()
@@ -24,7 +24,9 @@ export function App() {
     transactionsByEmployeeUtils.invalidateData()
 
     await employeeUtils.fetchAll()
+
     setIsLoading(false)
+
     await paginatedTransactionsUtils.fetchAll()
 
   }, [employeeUtils, paginatedTransactionsUtils, transactionsByEmployeeUtils])
@@ -64,26 +66,21 @@ export function App() {
             if (newValue === null) {
               return
             }
-            else if (newValue.id === "") {
-              await loadAllTransactions()
+            if (newValue.id === ''){
+                await loadAllTransactions()
             }
-            else await loadTransactionsByEmployee(newValue.id)
+            else{
+                await loadTransactionsByEmployee(newValue.id)
+            }
           }}
         />
 
         <div className="RampBreak--l" />
 
         <div className="RampGrid">
-          {transactions === null ? (
-            <div className="RampLoading--container">Loading...</div>
-          ) : (
-            <Fragment>
-              <div data-testid="transaction-container">
-                {transactions.map((transaction) => (
-                  <TransactionPane key={transaction.id} transaction={transaction} />
-                ))}
-              </div>
-              {transactions !== null && paginatedTransactions !== null && paginatedTransactions.nextPage !== null && (
+          <Transactions transactions={transactions} />
+
+          {transactions !== null && paginatedTransactions !== null && paginatedTransactions.nextPage !== null && (
             <button
               className="RampButton"
               disabled={paginatedTransactionsUtils.loading}
@@ -93,8 +90,6 @@ export function App() {
             >
               View More
             </button>
-          )}
-            </Fragment>
           )}
         </div>
       </main>
