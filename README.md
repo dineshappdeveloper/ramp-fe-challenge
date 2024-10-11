@@ -82,7 +82,7 @@ We don't have a real API for this challenge, so we added some utilities to simul
 
 **Actual:** Options dropdown stays in the same position as you scroll the page, losing the reference to the select input
 
-# Bug 2: Approve checkbox not working[done]
+# Bug 2: Approve checkbox not working[done='Fix Cursor issue']
 
 **How to reproduce:**
 1. Click on the checkbox on the right of any transaction
@@ -171,7 +171,7 @@ _This bug has 2 wrong behaviors that can be fixed with the same solution. It's a
 
 **Actual:** When you reach the end of the data, the **View More** button is still showing and you are still able to click the button. If you click it, the page crashes.
 
-# Bug 7: Approving a transaction won't persist the new value[done]
+# Bug 7: Approving a transaction won't persist the new value[done='']
 
 _You need to fix some of the previous bugs in order to reproduce_
 
